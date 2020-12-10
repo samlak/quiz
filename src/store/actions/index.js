@@ -1,25 +1,41 @@
 import * as actionTypes from './actionTypes';
 
-export const getQuestions = () => {
+export const addCategory = (category) => {
   return {
-    type: actionTypes.GET_QUESTIONS
+    type: actionTypes.ADD_CATEGORY,
+    category
   }
 }
 
-export const createUser = () => {
+export const createUser = (user) => {
   return {
-    type: actionTypes.CREATE_USER
+    type: actionTypes.CREATE_USER,
+    user
   }
 }
 
-export const getLeaderboard = () => {
+export const updateScore = (score) => {
   return {
-    type: actionTypes.GET_LEADERBOARD
+    type: actionTypes.UPDATE_SCORE,
+    score
   }
 }
 
-export const addToLeaderboard = () => {
+export const addToLeaderboard = (user, score) => {
   return {
-    type: actionTypes.ADD_TO_LEADERBOARD
+    type: actionTypes.ADD_TO_LEADERBOARD,
+    user, score
+  }
+}
+
+export const saveToStorage  = () => {
+  return {
+    type: actionTypes.SAVE_TO_STORAGE
+  }
+}
+
+export const getFromStorage  = () => {
+  return {
+    type: actionTypes.GET_FROM_STORAGE
   }
 }

@@ -5,32 +5,30 @@ import Leaderboard from '../components/Leaderboard'
 
 class Home extends Component {
     state = {
-        counter: 0
     }
 
     render () {
+        console.log(this.props.user)
         return (
             <div className="home">
                 <h1 className="home__header">RASHGET</h1>
-                <p className="home__text">Hello Guest</p>
+                <p className="home__text">Hello <span className="user"> {this.props.user || "Guest"} </span> </p>
                 <Link to="/start">
                     <div className="home__button">
                         <button className="button">Take Quiz</button>
                     </div>
                 </Link>
-                <Leaderboard />
+                <Leaderboard data={this.props.leaderboard}/>
             </div>
         )
     }
 }
 
-// const mapStateToProps = state => {
-//     return {};
-// };
+const mapStateToProps = state => {
+    return {
+        leaderboard: state.data.leaderboard,
+        user: state.data.user
+    };
+};
 
-// const mapDispatchToProps = dispatch => {
-//     return {};
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Home);
-export default Home;
+export default connect(mapStateToProps)(Home);

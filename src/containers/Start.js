@@ -1,10 +1,60 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as action from '../store/actions/index';
 
 class Start extends Component {
     state = {
-        counter: 0
+      user: null,
+      newUser: true,
+      catgeory: '',
+      message: ''
+    }
+
+    componentDidMount() {
+      if(this.props.user){
+        this.setState({
+          newUser: false
+        })
+      }
+    }
+
+    newUser = (event)  => {
+      event.preventDefault();
+      this.setState({
+        newUser: true
+      })
+    }
+
+    updateOption = (event, option) => {
+      const value = event.target.value;
+      this.setState({
+        message: '',
+        [option]: value
+      })
+    }
+
+    startQuiz = (event) => {
+      event.preventDefault();
+      const userIsValid = (user) => {
+        return /^[a-zA-Z0-9]+$/.test(user.trim());
+      }
+
+      if(this.state.newUser && !this.state.user) {
+        this.setState({
+          message: "Username can not be empty"
+        })
+      } else if (this.state.newUser && !userIsValid(this.state.user)) {
+        this.setState({
+          message: "Only numbers and letters are allowed"
+        })
+      } else {
+        if (this.state.user) {
+          this.props.onCreateUser(this.state.user);
+        }
+        this.props.history.push("/quiz");
+        return this.props.onAddCategory(this.state.catgeory);
+      }
     }
 
     render () {
@@ -15,20 +65,27 @@ class Start extends Component {
           </div>
           <div className="start">
             <h1 className="start__header">Start Quiz</h1>
-            <form>
-              <div className="start__new-user">
-                <label className="start__text">What is your username</label><br/>
-                <input type="text" className="start__input" /><br/>
-              </div>
-              <div className="start__existing-user">
-                <p className="start__text--2">
-                  Continue as 
-                  <span className="user"> samlak</span>
-                </p>
-                <p className="start__text--3">OR</p>
-                <button className="button">As a new user</button>
-              </div>
-              <select name="category" class="start__select">
+            <form onSubmit={this.startQuiz}>
+              {this.state.newUser ? (
+                <div className="start__new-user">
+                  <label className="start__text">What is your username</label><br/>
+                  <input type="text" className="start__input" 
+                    onChange={(event) => this.updateOption(event, "user")}/><br/>
+                  <p className="start__error">{this.state.message}</p>
+                </div>
+              ) : (
+                <div className="start__existing-user">
+                  <p className="start__text--2">
+                    Continue as 
+                    <span className="user"> {this.props.user}</span>
+                  </p>
+                  <p className="start__text--3">OR</p>
+                  <button className="button" onClick={this.newUser}>New user</button>
+                </div>
+              )}
+              <select name="category" class="start__select" 
+                onChange={(event) => this.updateOption(event, "catgeory")}
+              >
                 <option value="any">Any Category</option>
                 <option value="9">General Knowledge</option>
                 <option value="10">Entertainment: Books</option>
@@ -63,13 +120,17 @@ class Start extends Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {};
-// };
+const mapStateToProps = state => {
+  return {
+    user: state.data.user
+  };
+};
 
-// const mapDispatchToProps = dispatch => {
-//     return {};
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    onCreateUser: (user) => dispatch(action.createUser(user)),
+    onAddCategory: (category) => dispatch(action.addCategory(category))
+  };
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Start);
-export default Start;
+export default connect(mapStateToProps, mapDispatchToProps)(Start);

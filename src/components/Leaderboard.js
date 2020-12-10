@@ -1,5 +1,5 @@
 
-function Leaderboard() {
+function Leaderboard({data}) {
   return (
     <div className="leaderboard">
       <h2 className="leaderboard__header">Leaderboard</h2>
@@ -9,14 +9,12 @@ function Leaderboard() {
           <td>Score</td>  
         </thead>   
         <tbody>
-          <tr>
-            <td>samlak</td>
-            <td>97</td>
-          </tr>
-          <tr>
-            <td>samlak</td>
-            <td>97</td>
-          </tr>
+          { data.map((board) => (
+            <tr>
+              <td>{board.user}</td>
+              <td>{board.score}</td>
+            </tr>
+          )) }
         </tbody>
       </table>
     </div>
