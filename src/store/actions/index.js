@@ -28,9 +28,17 @@ export const addToLeaderboard = (user, score) => {
   }
 }
 
-export const saveToStorage  = () => {
+const storageAction = () => {
   return {
     type: actionTypes.SAVE_TO_STORAGE
+  }
+}
+
+export const saveToStorage  = (leaderboard, user) => {
+  return dispatch => {
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(storageAction());
   }
 }
 

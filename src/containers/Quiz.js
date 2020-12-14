@@ -17,8 +17,8 @@ class Quiz extends Component {
 
     componentDidMount() {
       let url = `https://opentdb.com/api.php?amount=10&type=multiple`;
-      if(this.props.catgeory){
-        url = `https://opentdb.com/api.php?amount=10&category=${this.props.catgeory}&type=multiple`;
+      if(this.props.category){
+        url = `https://opentdb.com/api.php?amount=10&category=${this.props.category}&type=multiple`;
       }
       axios.get(url).then(response => {
         console.log(response.data.results);
@@ -65,7 +65,7 @@ class Quiz extends Component {
 
         setTimeout(() => {
           this.setState((prevState) => {
-            if(prevState.activeQuestion >= 0){
+            if(prevState.activeQuestion >= 9){
               this.saveQuiz();
             }
             return {
@@ -91,7 +91,6 @@ class Quiz extends Component {
       this.props.onScoreUpdate(this.state.score);
       this.props.onAddToLeaderboard(this.props.user, newScore);
       this.props.history.push("/result");
-      this.props.onSaveToStorage();
     }
 
     render () {
@@ -159,8 +158,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onAddToLeaderboard: (user, score) => dispatch(action.addToLeaderboard(user, score)),
-    onScoreUpdate: (score) => dispatch(action.updateScore(score)),
-    onSaveToStorage: () => dispatch(action.saveToStorage())
+    onScoreUpdate: (score) => dispatch(action.updateScore(score))
   };
 }
 

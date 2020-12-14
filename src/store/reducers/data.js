@@ -11,7 +11,7 @@ const initialState = {
 const addCategory = (state, action) => {
   return {
     ...state,
-    questions: action.category
+    category: action.category
   };
 }
 
@@ -30,21 +30,18 @@ const addToLeaderboard = (state, action) => {
     }
     return comparison;
   });
-
-  localStorage.setItem("leaderboard", JSON.stringify(state.leaderboard));
-  localStorage.setItem("user", JSON.stringify(state.user));
   return {
     ...state,
     leaderboard: sortedLeaderboard
   };
 }
 
-const saveToStorage  = (state) => {
-  console.log(state)
-  localStorage.setItem("leaderboard", JSON.stringify(state.leaderboard));
-  localStorage.setItem("user", JSON.stringify(state.user));
-  return ;
-}
+// const saveToStorage  = (state) => {
+//   console.log(state)
+//   localStorage.setItem("leaderboard", JSON.stringify(state.leaderboard));
+//   localStorage.setItem("user", JSON.stringify(state.user));
+//   return ;
+// }
 
 const getFromStorage  = (state) => {
   const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
@@ -72,8 +69,8 @@ const reducer = (state = initialState, action) => {
       }
     case actionTypes.ADD_CATEGORY:
       return addCategory(state, action);
-    case actionTypes.SAVE_TO_STORAGE:
-      return saveToStorage(state);
+    // case actionTypes.SAVE_TO_STORAGE:
+    //   return saveToStorage(state);
     case actionTypes.GET_FROM_STORAGE:
       return getFromStorage(state);
     default:

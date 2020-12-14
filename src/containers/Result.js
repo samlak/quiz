@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as action from '../store/actions/index';
 
 class Result extends Component {
     state = {
         counter: 0
+    }
+
+    componentDidMount() {
+      if(this.props.user){
+        this.props.onSaveToStorage(this.props.leaderboard, this.props.user);
+      }
     }
 
     render () {
@@ -26,7 +33,7 @@ class Result extends Component {
       return (
         <>
           <div className="back">
-            <Link to="/quiz" className="back__link"></Link>
+            <Link to="/start" className="back__link"></Link>
           </div>
           <div className="result">
             <h1 className="result__header">Quiz result</h1>
@@ -51,4 +58,10 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Result);
+const mapDispatchToProps = dispatch => {
+  return {
+    onSaveToStorage: (leaderboard, user) => dispatch(action.saveToStorage(leaderboard, user))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Result);

@@ -24,9 +24,28 @@ body {
 .container {
   top: 0;
   right: 0;
-  margin: 10% 25% 0;
+  margin: 10% 30% 0;
   box-shadow: 0 0 5px 5px rgba(230, 230, 230, 0.26);
   border-radius: 10px;
+}
+
+
+@media (max-width: 75em) {
+  .container {
+    margin: 10% 25% 0;
+  }
+}
+
+@media (max-width: 56.25em) {
+  .container {
+    margin: 10% 15% 0;
+  }
+}
+
+@media (max-width: 37.5em) {
+  .container {
+    margin: 3%;
+  }
 }
 
 .home {

@@ -52,8 +52,8 @@ class Start extends Component {
         if (this.state.user) {
           this.props.onCreateUser(this.state.user);
         }
-        this.props.history.push("/quiz");
-        return this.props.onAddCategory(this.state.catgeory);
+        this.props.onAddCategory(this.state.catgeory);
+        return this.props.history.push("/quiz");
       }
     }
 
